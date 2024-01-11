@@ -87,4 +87,18 @@ Property TransactionTime As %Time;
 /// MOA
 Property XProgram As %String;
 
+Trigger LogEvent [ Event = INSERT, Time = AFTER ]
+{
+	// get row id of inserted row
+	NEW id,SQLCODE
+	SET id = {ID}
+	// INSERT value into Log table
+	&sql(INSERT INTO LogTable (TableName, IDValue) VALUES ('FMS.Document', :id))
+	IF SQLCODE<0 {
+		SET baderr="SQLCODE ERROR:"_SQLCODE_" "_%msg
+		SET %ok=0
+		RETURN baderr
+	}
+}
+
 }
