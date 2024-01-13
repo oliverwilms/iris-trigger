@@ -1,6 +1,8 @@
 Class FMS.Document Extends %Persistent
 {
 
+Parameter DSTIME As STRING [ Constraint = ",AUTO,MANUAL", Flags = ENUM ] = "AUTO";
+
 Property BatchNumber As %String;
 
 /// MOA
